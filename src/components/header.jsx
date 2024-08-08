@@ -30,6 +30,17 @@ export const Header = () => {
                             Users
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            className={({ isActive }) =>
+                                cn('hover:text-blue-200 transition-colors', {
+                                    'underline underline-offset-4': isActive
+                                })
+                            }
+                            to={routes.products}>
+                            Products
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>

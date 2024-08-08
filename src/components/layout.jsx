@@ -8,7 +8,9 @@ export const Layout = () => {
         <>
             <Header />
             <main>
-                <Outlet />
+                <div className='container mx-auto'>
+                    <Outlet />
+                </div>
             </main>
         </>
     )

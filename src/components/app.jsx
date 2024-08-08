@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { routes } from '../config/routes'
 import { ErrorPage } from '../pages/error-page'
 import { HomePage } from '../pages/home-page'
+import { ProductsPage } from '../pages/products-page'
 import { UserPage } from '../pages/user-page'
 import { UsersPage } from '../pages/users-page'
 
@@ -26,6 +27,10 @@ export const App = () => {
                 {
                     path: routes.user,
                     element: <UserPage />
+                },
+                {
+                    path: routes.products,
+                    element: <ProductsPage />
                 }
             ]
         },

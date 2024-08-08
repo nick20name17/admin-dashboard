@@ -3,13 +3,19 @@ import React from 'react'
 import { useGetData } from '../../hooks/use-get-data'
 import { useTableView } from '../../providers/table-view-provider'
 
-import { UsersCards } from './users-cards'
-import { UsersTable } from './users-table'
+import { ProductsCards } from './products-cards'
+import { ProductsTable } from './products-table'
 
-export const Users = () => {
+export const Products = () => {
     const { tableView, onTableViewSwitch } = useTableView()
 
-    const { data: users } = useGetData({ endpoint: '/users' })
+    const { data: products } = useGetData({
+        endpoint: '/products',
+        queryParamsObject: {
+            offset: 0,
+            limit: 20
+        }
+    })
 
     return (
         <div className='mt-10'>
@@ -18,7 +24,11 @@ export const Users = () => {
                 className='px-4 py-2 bg-blue-600 rounded-sm text-blue-50'>
                 Switch to {tableView ? 'Cards View' : 'Table View'}
             </button>
-            {tableView ? <UsersTable users={users} /> : <UsersCards users={users} />}
+            {tableView ? (
+                <ProductsTable products={products} />
+            ) : (
+                <ProductsCards products={products} />
+            )}
         </div>
     )
 }
