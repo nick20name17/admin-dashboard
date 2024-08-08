@@ -11,6 +11,7 @@ export const UsersCards = ({ users }) => {
                         <div className='text-center absolute top-4 right-4 bg-blue-600 text-blue-50 rounded-full px-2 py-1'>
                             {user.role}
                         </div>
+
                         <ImageWithFallback
                             alt={user.name}
                             src={user.avatar}

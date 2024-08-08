@@ -1,3 +1,4 @@
+import { Button } from 'antd'
 import React from 'react'
 
 import { useGetData } from '../../hooks/use-get-data'
@@ -13,11 +14,12 @@ export const Users = () => {
 
     return (
         <div className='mt-10'>
-            <button
+            <Button
+                type='primary'
                 onClick={onTableViewSwitch}
                 className='px-4 py-2 bg-blue-600 rounded-sm text-blue-50'>
                 Switch to {tableView ? 'Cards View' : 'Table View'}
-            </button>
+            </Button>
             {tableView ? <UsersTable users={users} /> : <UsersCards users={users} />}
         </div>
     )
