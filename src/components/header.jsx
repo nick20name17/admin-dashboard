@@ -6,12 +6,12 @@ import { cn } from '../libs/cn'
 export const Header = () => {
     return (
         <header>
-            <nav className='flex justify-between items-center bg-blue-600  p-6'>
-                <ul className='flex justify-center gap-x-4 text-blue-50 text-lg'>
+            <nav className='flex items-center justify-between bg-blue-600 p-6'>
+                <ul className='flex justify-center gap-x-4 text-lg text-blue-50'>
                     <li>
                         <NavLink
                             className={({ isActive }) =>
-                                cn('hover:text-blue-200 transition-colors', {
+                                cn('transition-colors hover:text-blue-200', {
                                     'underline underline-offset-4': isActive
                                 })
                             }
@@ -22,7 +22,7 @@ export const Header = () => {
                     <li>
                         <NavLink
                             className={({ isActive }) =>
-                                cn('hover:text-blue-200 transition-colors', {
+                                cn('transition-colors hover:text-blue-200', {
                                     'underline underline-offset-4': isActive
                                 })
                             }
@@ -33,7 +33,7 @@ export const Header = () => {
                     <li>
                         <NavLink
                             className={({ isActive }) =>
-                                cn('hover:text-blue-200 transition-colors', {
+                                cn('transition-colors hover:text-blue-200', {
                                     'underline underline-offset-4': isActive
                                 })
                             }
