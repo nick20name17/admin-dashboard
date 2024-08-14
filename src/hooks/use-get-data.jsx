@@ -1,12 +1,12 @@
 import axios from 'axios'
-import React from 'react'
+import { useEffect, useState } from 'react'
 
 export const useGetSingleItem = ({ endpoint, id }) => {
-    const [data, setData] = React.useState([])
-    const [error, setError] = React.useState(null)
-    const [isLoading, setIsLoading] = React.useState(true)
+    const [data, setData] = useState([])
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get(
@@ -29,26 +29,28 @@ export const useGetSingleItem = ({ endpoint, id }) => {
 export const useGetData = ({ endpoint, queryParamsObject }) => {
     const queryParams = new URLSearchParams(queryParamsObject)?.toString()
 
-    const [data, setData] = React.useState([])
-    const [error, setError] = React.useState(null)
-    const [isLoading, setIsLoading] = React.useState(true)
+    const [data, setData] = useState([])
+    const [count, setCount] = useState(0)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get(
                     'https://api.escuelajs.co/api/v1' + endpoint + '?' + queryParams
                 )
+                setCount(response.headers['content-length'])
                 setData(response.data)
             } catch (error) {
                 setError(error.message)
             } finally {
-                setIsLoading(false)
+                setLoading(false)
             }
         }
 
         fetchUsers()
-    }, [queryParamsObject])
+    }, [queryParamsObject?.offset, queryParamsObject?.limit, queryParamsObject?.title])
 
-    return { data, error, loading: isLoading }
+    return { data, error, loading, count }
 }

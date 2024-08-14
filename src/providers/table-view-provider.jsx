@@ -6,7 +6,7 @@ export const TableViewContext = createContext({
 })
 
 export const TableViewProvider = ({ children }) => {
-    const [tableView, setTableView] = useState(false)
+    const [tableView, setTableView] = useState(true)
 
     const value = {
         tableView,
