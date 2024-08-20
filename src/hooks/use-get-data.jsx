@@ -50,7 +50,14 @@ export const useGetData = ({ endpoint, queryParamsObject }) => {
         }
 
         fetchUsers()
-    }, [queryParamsObject?.offset, queryParamsObject?.limit, queryParamsObject?.title])
+    }, [
+        queryParamsObject?.offset,
+        queryParamsObject?.limit,
+        queryParamsObject?.title,
+        queryParamsObject?.categoryId,
+        queryParamsObject?.price_min,
+        queryParamsObject?.price_max
+    ])
 
     return { data, error, loading, count }
 }

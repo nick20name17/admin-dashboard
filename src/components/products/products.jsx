@@ -6,6 +6,8 @@ import { useGetData } from '../../hooks/use-get-data'
 import { useTableView } from '../../providers/table-view-provider'
 import { SearchBar } from '../shared/search-bar'
 
+import { CategoryFilter } from './category-filters'
+import { PriceRangeFilter } from './price-range-filter'
 import { ProductsCards } from './products-cards'
 import { ProductsTable } from './products-table'
 
@@ -13,6 +15,8 @@ export const Products = () => {
     const { tableView, onTableViewSwitch } = useTableView()
 
     const [search, setSearch] = useDebounceValue('', 200)
+    const [category, setCategory] = useState(0)
+    const [priceRange, setPriceRange] = useState([5, 200])
 
     const [tableParams, setTableParams] = useState({
         pagination: {
@@ -31,7 +35,10 @@ export const Products = () => {
         queryParamsObject: {
             limit: tableParams?.pagination?.pageSize,
             offset: tableParams?.pagination?.pageSize * tableParams?.pagination?.current,
-            title: search
+            title: search,
+            categoryId: category ? category : '',
+            price_min: priceRange[0],
+            price_max: priceRange[1]
         }
     })
 
@@ -57,10 +64,20 @@ export const Products = () => {
             </Button>
             {tableView ? (
                 <>
-                    <SearchBar
-                        search={search}
-                        setSearch={setSearch}
-                    />
+                    <div className='mt-10 flex items-center justify-between gap-6'>
+                        <SearchBar
+                            search={search}
+                            setSearch={setSearch}
+                        />
+                        <CategoryFilter
+                            setCategory={setCategory}
+                            category={category}
+                        />
+                        <PriceRangeFilter
+                            range={priceRange}
+                            setRange={setPriceRange}
+                        />
+                    </div>
                     <ProductsTable
                         products={products}
                         loading={loading}
