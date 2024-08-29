@@ -9,7 +9,7 @@ import { SearchBar } from '../shared/search-bar'
 import { CategoryFilter } from './category-filters'
 import { PriceRangeFilter } from './price-range-filter'
 import { ProductsCards } from './products-cards'
-import { ProductsTable } from './products-table'
+import { ProductsTable } from './table/products-table'
 
 export const Products = () => {
     const { tableView, onTableViewSwitch } = useTableView()

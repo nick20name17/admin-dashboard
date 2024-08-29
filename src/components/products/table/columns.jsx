@@ -2,6 +2,8 @@ import { Tooltip } from 'antd'
 
 import { trunc } from '../../../utils/utils'
 
+import { Actions } from './cells/actions'
+
 export const columns = [
     {
         title: 'Title',
@@ -28,5 +30,11 @@ export const columns = [
         dataIndex: 'category',
         key: 'category',
         render: (_, record) => record.category.name
+    },
+    {
+        title: 'Actions',
+        dataIndex: 'actions',
+        key: 'actions',
+        render: (_, record) => <Actions product={record} />
     }
 ]

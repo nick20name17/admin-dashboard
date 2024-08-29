@@ -7,7 +7,7 @@ export const useGetSingleItem = ({ endpoint, id }) => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchData = async () => {
             try {
                 const response = await axios.get(
                     'https://api.escuelajs.co/api/v1' + endpoint + '/' + id
@@ -20,7 +20,7 @@ export const useGetSingleItem = ({ endpoint, id }) => {
             }
         }
 
-        fetchUsers()
+        fetchData()
     }, [])
 
     return { data, error, loading: isLoading }
@@ -35,7 +35,7 @@ export const useGetData = ({ endpoint, queryParamsObject }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchData = async () => {
             try {
                 const response = await axios.get(
                     'https://api.escuelajs.co/api/v1' + endpoint + '?' + queryParams
@@ -49,7 +49,7 @@ export const useGetData = ({ endpoint, queryParamsObject }) => {
             }
         }
 
-        fetchUsers()
+        fetchData()
     }, [
         queryParamsObject?.offset,
         queryParamsObject?.limit,

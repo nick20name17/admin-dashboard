@@ -1,6 +1,6 @@
 import { Table } from 'antd'
 
-import { columns } from './table/columns'
+import { columns } from './columns'
 
 export const ProductsTable = ({ products, loading, tableParams, setTableParams }) => {
     const dataSource = products.map((product) => ({

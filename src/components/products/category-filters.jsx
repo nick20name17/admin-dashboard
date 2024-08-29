@@ -1,12 +1,10 @@
 import { Select } from 'antd'
 import React from 'react'
 
-import { useGetData } from '../../hooks/use-get-data'
+import { useCategories } from '../../providers/categories-provider'
 
 export const CategoryFilter = ({ setCategory, category }) => {
-    const { data: categories, loading } = useGetData({
-        endpoint: '/categories'
-    })
+    const categories = useCategories()
 
     const options = categories?.map((category) => ({
         value: category.id,
@@ -29,7 +27,7 @@ export const CategoryFilter = ({ setCategory, category }) => {
 
     return (
         <Select
-            disabled={loading}
+            disabled={!categories || categories.length === 0}
             placeholder='Select a category'
             className='!w-40 flex-shrink-0'
             defaultValue={category}
