@@ -1,5 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+
+import { api } from '../api/api'
 
 export const useGetSingleItem = ({ endpoint, id }) => {
     const [data, setData] = useState([])
@@ -9,9 +10,7 @@ export const useGetSingleItem = ({ endpoint, id }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    'https://api.escuelajs.co/api/v1' + endpoint + '/' + id
-                )
+                const response = await api.get(endpoint + '/' + id)
                 setData(response.data)
             } catch (error) {
                 setError(error.message)
@@ -37,9 +36,7 @@ export const useGetData = ({ endpoint, queryParamsObject }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    'https://api.escuelajs.co/api/v1' + endpoint + '?' + queryParams
-                )
+                const response = await api.get(endpoint + '?' + queryParams)
                 setCount(response.headers['content-length'])
                 setData(response.data)
             } catch (error) {

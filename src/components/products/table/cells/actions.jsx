@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Edit, Trash } from 'lucide-react'
 import React, { useState } from 'react'
 
-import { useCategories } from '../../../../providers/categories-provider'
+import { useGetData } from '../../../../hooks/use-get-data'
 
 export const Actions = ({ product }) => {
     return (
@@ -73,7 +73,9 @@ const EditModal = ({ product }) => {
 
     const handleCancel = () => setIsModalOpen(false)
 
-    const categories = useCategories()
+    const { data: categories, loading } = useGetData({
+        endpoint: '/categories'
+    })
 
     const options = categories?.map((category) => ({
         value: category.id,
@@ -139,7 +141,7 @@ const EditModal = ({ product }) => {
                         <Select
                             defaultValue={category}
                             onChange={(value) => setCategory(value)}
-                            disabled={!categories || categories.length === 0}
+                            disabled={loading && categories?.length === 0}
                             options={mergedOptions}
                         />
                     </Form.Item>
