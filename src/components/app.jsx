@@ -2,37 +2,50 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { routes } from '../config/routes'
 import { ErrorPage } from '../pages/error-page'
-import { HomePage } from '../pages/home-page'
+import { LoginPage } from '../pages/login-page'
 import { ProductsPage } from '../pages/products-page'
 import { UserPage } from '../pages/user-page'
 import { UsersPage } from '../pages/users-page'
+import { RequireAuthProvider } from '../providers/require-auth-provider'
 
 import { Layout } from './layout'
 
 export const App = () => {
     const router = createBrowserRouter([
         {
-            path: routes.home,
+            path: routes.users,
             element: <Layout />,
             errorElement: <ErrorPage />,
             children: [
                 {
                     index: true,
-                    element: <HomePage />
-                },
-                {
-                    path: routes.users,
-                    element: <UsersPage />
+                    element: (
+                        <RequireAuthProvider>
+                            <UsersPage />
+                        </RequireAuthProvider>
+                    )
                 },
                 {
                     path: routes.user,
-                    element: <UserPage />
+                    element: (
+                        <RequireAuthProvider>
+                            <UserPage />
+                        </RequireAuthProvider>
+                    )
                 },
                 {
                     path: routes.products,
-                    element: <ProductsPage />
+                    element: (
+                        <RequireAuthProvider>
+                            <ProductsPage />
+                        </RequireAuthProvider>
+                    )
                 }
             ]
+        },
+        {
+            path: routes.login,
+            element: <LoginPage />
         },
         {
             path: '*',
