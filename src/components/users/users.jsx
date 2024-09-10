@@ -1,11 +1,19 @@
 import { Button } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useQuery } from 'react-query'
 
-import { useGetData } from '../../hooks/use-get-data'
+import { api } from '../../api/api'
 import { useTableView } from '../../providers/table-view-provider'
 
 import { UsersTable } from './table/users-table'
 import { UsersCards } from './users-cards'
+
+const getUsers = async (query) => {
+    const queryParams = new URLSearchParams(query)?.toString()
+
+    const response = await api.get('/users?' + queryParams)
+    return response.data
+}
 
 export const Users = () => {
     const { tableView, onTableViewSwitch } = useTableView()
@@ -14,33 +22,31 @@ export const Users = () => {
         pagination: {
             current: 0,
             pageSize: 10,
-            total: 0
+            total: 100
         }
     })
 
-    const {
-        data: users,
-        loading,
-        count
-    } = useGetData({
-        endpoint: '/users',
-        queryParamsObject: {
-            limit: tableParams?.pagination?.pageSize,
-            offset: tableParams?.pagination?.pageSize * tableParams?.pagination?.current
-        }
+    const { isLoading, data: users } = useQuery({
+        queryFn: () =>
+            getUsers({
+                limit: tableParams?.pagination?.pageSize,
+                offset:
+                    tableParams?.pagination?.pageSize * tableParams?.pagination?.current
+            }),
+        queryKey: ['users', { tableParams }]
     })
 
-    useEffect(() => {
-        if (count !== undefined) {
-            setTableParams((prev) => ({
-                ...prev,
-                pagination: {
-                    ...prev.pagination,
-                    total: count
-                }
-            }))
-        }
-    }, [count])
+    // const {
+    //     data: users,
+    //     loading,
+    //     count
+    // } = useGetData({
+    //     endpoint: '/users',
+    //     queryParamsObject: {
+    //         limit: tableParams?.pagination?.pageSize,
+    //         offset: tableParams?.pagination?.pageSize * tableParams?.pagination?.current
+    //     }
+    // })
 
     return (
         <div className='mt-10'>
@@ -53,14 +59,14 @@ export const Users = () => {
             {tableView ? (
                 <UsersTable
                     users={users}
-                    loading={loading}
+                    loading={isLoading}
                     tableParams={tableParams}
                     setTableParams={setTableParams}
                 />
             ) : (
                 <UsersCards
                     users={users}
-                    loading={loading}
+                    loading={isLoading}
                 />
             )}
         </div>

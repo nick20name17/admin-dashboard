@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Login } from '../components/login/login'
+import { MetaHead } from '../components/meta-head'
 import { routes } from '../config/routes'
 
 export const LoginPage = () => {
@@ -15,5 +16,10 @@ export const LoginPage = () => {
         }
     }, [])
 
-    return <Login />
+    return (
+        <>
+            <MetaHead />
+            <Login />
+        </>
+    )
 }

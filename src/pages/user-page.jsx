@@ -1,39 +1,45 @@
 import React from 'react'
+import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 
-import { useGetSingleItem } from '../hooks/use-get-data'
+import { api } from '../api/api'
+
+const getUser = async (id) => {
+    const response = await api.get(`/users/${id}`)
+    return response.data
+}
 
 export const UserPage = () => {
     const { id } = useParams()
 
-    const { data, loading } = useGetSingleItem({
-        endpoint: '/users',
-        id
+    const { data: user, isLoading } = useQuery({
+        queryFn: () => getUser(id),
+        queryKey: ['user']
     })
 
-    if (loading) {
+    if (isLoading) {
         return <UserSkeleton />
     }
 
     return (
-        <article className='size-60 rounded-lg bg-blue-500 p-4 mt-20 mx-auto'>
+        <article className='mx-auto mt-20 size-60 rounded-lg bg-blue-500 p-4'>
             <img
-                className='size-20 mx-auto rounded-full'
-                src={data.avatar}
-                alt={data.name}
+                className='mx-auto size-20 rounded-full'
+                src={user.avatar}
+                alt={user.name}
             />
-            <h1 className='text-center text-3xl text-white mt-4'>{data.name}</h1>
-            <div className='text-center text-xl text-slate-300 mt-2'>{data.email}</div>
+            <h1 className='mt-4 text-center text-3xl text-white'>{user.name}</h1>
+            <div className='mt-2 text-center text-xl text-slate-300'>{user.email}</div>
         </article>
     )
 }
 
 const UserSkeleton = () => {
     return (
-        <article className='size-60  rounded-lg bg-blue-500 p-4 mt-20 mx-auto'>
-            <div className='size-20 bg-blue-200 mx-auto rounded-full animate-pulse' />
-            <div className='w-32 animate-pulse bg-blue-200 h-6 mt-4 mx-auto rounded-md'></div>
-            <div className='w-20 animate-pulse bg-blue-200 h-6 mt-2 mx-auto rounded-md'></div>
+        <article className='mx-auto mt-20 size-60 rounded-lg bg-blue-500 p-4'>
+            <div className='mx-auto size-20 animate-pulse rounded-full bg-blue-200' />
+            <div className='mx-auto mt-4 h-6 w-32 animate-pulse rounded-md bg-blue-200'></div>
+            <div className='mx-auto mt-2 h-6 w-20 animate-pulse rounded-md bg-blue-200'></div>
         </article>
     )
 }

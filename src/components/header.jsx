@@ -1,8 +1,9 @@
 import { Dropdown } from 'antd'
+import { useQuery } from 'react-query'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
+import { api } from '../api/api'
 import { routes } from '../config/routes'
-import { useGetData } from '../hooks/use-get-data'
 import { cn } from '../libs/cn'
 
 export const Header = () => {
@@ -49,18 +50,24 @@ export const Header = () => {
     )
 }
 
+const getProfile = async () => {
+    const response = await api.get('/auth/profile')
+    return response.data
+}
+
 const Profile = () => {
     const navigate = useNavigate()
 
-    const { data, loading } = useGetData({
-        endpoint: 'auth/profile'
+    const { data: profile, isLoading } = useQuery({
+        queryFn: getProfile,
+        queryKey: ['profile']
     })
 
-    if (loading) {
+    if (isLoading) {
         return <div className='size-10 animate-pulse rounded-full bg-blue-100' />
     }
 
-    const firstNameInitial = data?.name?.charAt(0)?.toUpperCase()
+    const firstNameInitial = profile?.name?.charAt(0)?.toUpperCase()
 
     const logOut = () => {
         localStorage.removeItem('accessToken')
@@ -80,11 +87,11 @@ const Profile = () => {
             menu={{
                 items
             }}>
-            {data.avatar ? (
+            {profile.avatar ? (
                 <img
                     className='size-10 rounded-full'
-                    src={data.avatar}
-                    alt={data.name}
+                    src={profile.avatar}
+                    alt={profile.name}
                 />
             ) : (
                 <div className='flex size-10 items-center justify-center rounded-full bg-white'>

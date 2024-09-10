@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { columns } from './columns'
 
 export const ProductsTable = ({ products, loading, tableParams, setTableParams }) => {
-    const dataSource = products.map((product) => ({
+    const dataSource = products?.map((product) => ({
         key: product.id,
         title: product.title,
         price: product.price,

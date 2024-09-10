@@ -1,11 +1,18 @@
 import { Select } from 'antd'
 import React from 'react'
+import { useQuery } from 'react-query'
 
-import { useGetData } from '../../hooks/use-get-data'
+import { api } from '../../api/api'
+
+const getCategories = async () => {
+    const response = await api.get('/categories')
+    return response.data
+}
 
 export const CategoryFilter = ({ setCategory, category }) => {
-    const { data: categories, loading } = useGetData({
-        endpoint: '/categories'
+    const { isLoading, data: categories } = useQuery({
+        queryFn: getCategories,
+        queryKey: ['categories']
     })
 
     const options = categories?.map((category) => ({
@@ -18,7 +25,7 @@ export const CategoryFilter = ({ setCategory, category }) => {
             value: 0,
             label: 'All'
         },
-        ...options
+        ...(options || [])
     ]
 
     // if (loading) {
@@ -29,7 +36,7 @@ export const CategoryFilter = ({ setCategory, category }) => {
 
     return (
         <Select
-            disabled={loading && categories?.length === 0}
+            disabled={isLoading && categories?.length === 0}
             placeholder='Select a category'
             className='!w-40 flex-shrink-0'
             defaultValue={category}

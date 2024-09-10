@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { columns } from './columns'
 
 export const UsersTable = ({ users, loading, tableParams, setTableParams }) => {
-    const dataSource = users.map((user) => ({
+    const dataSource = users?.map((user) => ({
         key: user.id,
         avatar: user.avatar,
         name: user.name,

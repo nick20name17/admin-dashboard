@@ -52,7 +52,7 @@ export const columns = [
             <div className='flex justify-end'>
                 <Button
                     type='primary'
-                    href={routes.users + '/' + record.key}>
+                    href={routes.users + record.key}>
                     <ArrowRight className='size-4' />
                 </Button>
             </div>
